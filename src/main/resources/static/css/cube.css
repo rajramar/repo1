@@ -1,0 +1,22 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+
+.bg-color {
+     background:  #6e96ad;
+}
+
+h2{
+    margin-left:20px !important;
+}
+
+.headerLogo {
+    font-size: 14px;
+    font-family: "Verdana";
+}

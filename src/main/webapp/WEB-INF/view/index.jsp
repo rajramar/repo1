@@ -17,7 +17,7 @@
 
     <!-- Include SmartWizard CSS -->
     <link href="css/smart_wizard.css" rel="stylesheet" type="text/css" />
-
+    <link href="css/cube.css" rel="stylesheet" type="text/css" />
     <!-- Optional SmartWizard theme -->
     <link href="css/smart_wizard_theme_dots.css" rel="stylesheet" type="text/css" />
     <!-- Latest compiled and minified JavaScript -->
@@ -26,7 +26,9 @@
     <script src="js/app.js" type="text/javascript"></script>
 
 </head>
-<body ng-app="app" ng-controller="AppController">
+
+<body ng-app="app" ng-controller="AppController" class="bg-color">
+<div ng-include="'html/header.html'"></div>
 <div class="container">
     <br />
     <form action="api/saveDetails" id="myForm" role="form" data-toggle="validator" method="post" accept-charset="utf-8">
@@ -42,12 +44,13 @@
                 <li><a href="#step-4">Step 4<br /><small>Overview and Save</small></a></li>
             </ul>
 
-            ${cubemessage}
+
             <div>
                 <div id="step-1">
-                    <h2>Cube Info</h2>
+                    <h2>Cube Info ${cubemessage}</h2>
+
                     <div id="form-step-0" role="form" data-toggle="validator">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-left:20px">
 
                             <label for="modelName">Model Name:</label>
                             <select class="form-control" name="modelName" id="modelName" style="width:35%" ng-model="modelName">
@@ -55,11 +58,10 @@
                             </select>
 
                             <label for="cube">Cube Name:</label>
-                            <input type="text" class="form-control" style="width:35%" name="cube" ng-model="cubeName" id="cube" placeholder="Enter Cube Name" required>
-                            <div class="help-block with-errors"></div>
+                            <input type="text" class="form-control" style="width:35%" name="cube" ng-model="cubeName" id="cube" placeholder="Enter Cube Name">
 
                             <label for="description">Description:</label>
-                            <textarea class="form-control" name="description" id="description" ng-model="description" rows="3" placeholder="Description."></textarea>
+                            <textarea class="form-control" name="description" id="description" ng-model="description" rows="3" style="width:35%" placeholder="Description"></textarea>
 
                         </div>
                     </div>
@@ -68,7 +70,7 @@
                 <div id="step-2">
                     <h2>Dimension</h2>
                     <div id="form-step-1" role="form" data-toggle="validator">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-left:20px">
                             <label for="dimensionName1">Name:</label>
                             <input type="text" class="form-control" style="width:35%" name="dimensionName1" ng-model="dimensionName1" id="dimensionName1" placeholder="Dimension name">
 
@@ -76,6 +78,7 @@
                             <select class="form-control" id="tableName1" style="width:35%" ng-model="tableName1" ng-change="fetchColumnNames(1)">
                                 <option>Select table</option>
                             </select>
+                            <!-- <div class="help-block with-errors"></div> -->
 
                             <label for="colName1">Column Name:</label>
                             <select class="form-control" id="colName1" style="width:35%" ng-model="colName1">
@@ -90,7 +93,7 @@
                 <div id="step-3">
                     <h2>Measure</h2>
                     <div id="form-step-2" role="form" data-toggle="validator">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-left:20px">
                             <label for="measureName1">Name:</label>
                             <input type="text" class="form-control" style="width:35%" name="measureName1" id="measureName1" placeholder="Measure name">
 
@@ -123,6 +126,7 @@
                 <div id="step-4" class="">
                     <h2>Overview</h2>
                     <br>
+                    <div class="form-group" style="margin-left:20px">
                     <label for="overview_model">Model Name  :  </label> {{modelName}}
                     <br>
                     <label for="overview_cube">Cube Name  :  </label> {{cubeName}}
@@ -133,7 +137,7 @@
                     <br>
                     <label for="overview_measure">Measures  :  </label> <span id="overview_measure"></span>
                     <br>
-
+                    </div>
                     <!--<p>
                         Terms and conditions: Keep your smile :)
                     </p>
@@ -194,6 +198,8 @@
             .on('click', function(){
                 $('#smartwizard').smartWizard("reset");
                 $('#myForm').find("input, textarea").val("");
+                $('#myForm').attr('action', '/');
+                $("#myForm").submit();
             });
 
 
@@ -296,7 +302,7 @@
     function addDimension(){
 
         rowId++;
-        var html =   '<div class="form-group">'
+        var html =   '<div class="form-group" style="margin-left:20px">'
             +'<label for="dimensionName'+rowId+'">Name:</label>'
             +'<input type="text" class="form-control" style="width:35%" name="dimensionName'+rowId+'" id="dimensionName'+rowId+'" placeholder="Dimension name">'
             //+'<div class="help-block with-errors"></div>'
@@ -311,9 +317,11 @@
             +'<select class="form-control" id="colName'+rowId+'" style="width:35%" ng-model="colName'+rowId+'">'
             + '<option>Select column</option>'
             +'</select>'
-            +'</div>'
             +'<br/>'
-            + '<button type="button" class="btn" onclick="removeDimension()">Remove</button>';
+            + '<button type="button" class="btn" onclick="removeDimension()">Remove</button>'
+            +'</div>'
+            +'<br/>';
+
         addElement('form-step-1', 'div', 'row-' + rowId, html);//alert(elemId)
 
         $.get("api/get/tables/" + $('#modelName').val(), function (data, status) {
@@ -376,7 +384,7 @@
     function addMeasure(){
 
         rowIdMsr++;
-        var html =   '<div class="form-group">'
+        var html =   '<div class="form-group" style="margin-left:20px">'
             +'<label for="measureName'+rowIdMsr+'">Name:</label>'
             +'<input type="text" class="form-control" style="width:35%" name="measureName'+rowIdMsr+'" id="measureName'+rowIdMsr+'" placeholder="Measure name">'
 
@@ -398,9 +406,11 @@
             +'<select class="form-control" id="measureColName'+rowIdMsr+'" style="width:35%" ng-model="measureColName'+rowIdMsr+'">'
             + '<option>Select column</option>'
             +'</select>'
-            +'</div>'
             +'<br/>'
-            + '<button type="button" class="btn" onclick="removeMeasure()">Remove</button>';
+            + '<button type="button" class="btn" onclick="removeMeasure()">Remove</button>'
+            +'</div>'
+            +'<br/>';
+
         addElement('form-step-2', 'div', 'mrow-' + rowIdMsr, html);//alert(elemId)
 
         $.get("api/get/tables/" + $('#modelName').val(), function (data, status) {
@@ -476,6 +486,6 @@
 
 
 </script>
-
+<!-- <div ng-include="'html/footer.html'"></div> -->
 </body>
 </html>

@@ -290,7 +290,7 @@ public class MainController {
             process.waitFor();
             logger.debug("Process exit status : "+process.exitValue());
             //model.put("cubemessage","Cube Details captured successfully");
-            request.getSession().setAttribute("cubemessage","Cube Details captured successfully");
+            request.getSession().setAttribute("cubemessage"," captured successfully");
             if(process.exitValue() == 0){
                return "redirect:/";
                 //return "Cube Details captured successfully";
@@ -304,7 +304,7 @@ public class MainController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        model.put("cubemessage","Cube Details captured successfully");
+        model.put("cubemessage"," captured successfully");
         return "index";
         //return "Cube Details captured successfully";
         //return "ss";
