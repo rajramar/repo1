@@ -13,18 +13,24 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
     <!-- Latest compiled and minified CSS for select box -->
-    <link rel="stylesheet" href="css/bootstrap-select.min.css">
+    <!-- <link rel="stylesheet" href="css/bootstrap-select.min.css"> -->
 
     <!-- Include SmartWizard CSS -->
     <link href="css/smart_wizard.css" rel="stylesheet" type="text/css" />
     <link href="css/cube.css" rel="stylesheet" type="text/css" />
     <!-- Optional SmartWizard theme -->
     <link href="css/smart_wizard_theme_dots.css" rel="stylesheet" type="text/css" />
+
+    <link rel=”stylesheet” href=”https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css”>
+
     <!-- Latest compiled and minified JavaScript -->
-    <script src="js/bootstrap-select.js" type="text/javascript"></script>
+    <!--<script src="js/bootstrap-select.js" type="text/javascript"></script>-->
     <script src="js/angular.min.js" type="text/javascript"></script>
     <script src="js/app.js" type="text/javascript"></script>
 
+    <script src=”https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js”></script>
+    <script src=”https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js”></script>
+    <script src=”https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js”></script>
 </head>
 
 <body ng-app="app" ng-controller="AppController" class="bg-color">
@@ -53,9 +59,11 @@
                         <div class="form-group" style="margin-left:20px">
 
                             <label for="modelName">Model Name:</label>
-                            <select class="form-control" name="modelName" id="modelName" style="width:35%" ng-model="modelName">
+                            <div>
+                            <select class="selectpicker" name="modelName" id="modelName" style="width:35%" ng-model="modelName">
                                 <option ng-repeat="ab in databases">{{ab}}</option>
                             </select>
+                            </div>
 
                             <label for="cube">Cube Name:</label>
                             <input type="text" class="form-control" style="width:35%" name="cube" ng-model="cubeName" id="cube" placeholder="Enter Cube Name">
@@ -75,15 +83,19 @@
                             <input type="text" class="form-control" style="width:35%" name="dimensionName1" ng-model="dimensionName1" id="dimensionName1" placeholder="Dimension name">
 
                             <label for="tableName1">Table Name:</label>
-                            <select class="form-control" id="tableName1" style="width:35%" ng-model="tableName1" ng-change="fetchColumnNames(1)">
+                            <div>
+                            <select class="selectpicker" id="tableName1" style="width:35%" ng-model="tableName1" ng-change="fetchColumnNames(1)">
                                 <option>Select table</option>
                             </select>
+                            </div>
                             <!-- <div class="help-block with-errors"></div> -->
 
                             <label for="colName1">Column Name:</label>
-                            <select class="form-control" id="colName1" style="width:35%" ng-model="colName1">
+                            <div>
+                            <select class="selectpicker" id="colName1" style="width:35%" ng-model="colName1">
                                 <option ng-repeat="col in columns1">{{col}}</option>
                             </select>
+                            </div>
                             <br/>
                             <button type="button" class="btn" onclick="addDimension()">Add</button>
 
@@ -98,12 +110,15 @@
                             <input type="text" class="form-control" style="width:35%" name="measureName1" id="measureName1" placeholder="Measure name">
 
                             <label for="factTableName1">Table Name:</label>
-                            <select class="form-control" id="factTableName1" style="width:35%" ng-model="factTableName1" ng-change="fetchColumnNamesMeasure(1)">
+                            <div>
+                            <select class="selectpicker" id="factTableName1" style="width:35%" ng-model="factTableName1" ng-change="fetchColumnNamesMeasure(1)">
                                 <option>Select Fact table</option>
                             </select>
+                            </div>
 
                             <label for="measureExpression1">Expression:</label>
-                            <select class="form-control" id="measureExpression1" style="width:35%" ng-model="measureExpression1">
+                            <div>
+                            <select class="selectpicker" id="measureExpression1" style="width:35%" ng-model="measureExpression1">
                                 <option value="SUM">SUM</option>
                                 <option value="MAX">MAX</option>
                                 <option value="MIN">MIN</option>
@@ -112,11 +127,13 @@
                                 <option value="TOP_N">TOP_N</option>
 
                             </select>
-
+                            </div>
                             <label for="measureColName1">Column Name:</label>
-                            <select class="form-control" id="measureColName1" style="width:35%" ng-model="measureColName1">
+                            <div>
+                            <select class="selectpicker" id="measureColName1" style="width:35%" ng-model="measureColName1">
                                 <option ng-repeat="col in measureColumns1">{{col}}</option>
                             </select>
+                            </div>
                             <br/>
                             <button type="button" class="btn" onclick="addMeasure()">Add</button>
 
@@ -309,14 +326,18 @@
 
             //+'<label for="tableName_'+elemId+'"'+'>Table Name:</label>'
             +'<label for="tableName'+rowId+'">Table Name:</label>'
-            +   '<select class="form-control" id="tableName'+rowId+'" style="width:35%" ng-model="tableName'+rowId+'" onchange="fetchColumnNamesDimension('+rowId+')">'
+            +'<div>'
+            +   '<select class="selectpicker" id="tableName'+rowId+'" style="width:35%" ng-model="tableName'+rowId+'" onchange="fetchColumnNamesDimension('+rowId+')">'
             +        '<option>Select table</option>'
 
             +    '</select>'
+            +'</div>'
             +'<label for="colName'+rowId+'">Column Name:</label>'
-            +'<select class="form-control" id="colName'+rowId+'" style="width:35%" ng-model="colName'+rowId+'">'
+            +'<div>'
+            +'<select class="selectpicker" id="colName'+rowId+'" style="width:35%" ng-model="colName'+rowId+'">'
             + '<option>Select column</option>'
             +'</select>'
+            +'</div>'
             +'<br/>'
             + '<button type="button" class="btn" onclick="removeDimension()">Remove</button>'
             +'</div>'
@@ -389,12 +410,15 @@
             +'<input type="text" class="form-control" style="width:35%" name="measureName'+rowIdMsr+'" id="measureName'+rowIdMsr+'" placeholder="Measure name">'
 
             +'<label for="factTableName'+rowIdMsr+'">Table Name:</label>'
-            +   '<select class="form-control" id="factTableName'+rowIdMsr+'" style="width:35%" ng-model="factTableName'+rowIdMsr+'" onchange="fetchColumnNamesMeasure('+rowIdMsr+')">'
+            +'<div>'
+            +   '<select class="selectpicker" id="factTableName'+rowIdMsr+'" style="width:35%" ng-model="factTableName'+rowIdMsr+'" onchange="fetchColumnNamesMeasure('+rowIdMsr+')">'
             +        '<option>Select Fact table</option>'
 
             +    '</select>'
+             +'</div>'
             +'<label for="measureExpression'+rowIdMsr+'">Expression:</label>'
-            +   '<select class="form-control" id="measureExpression'+rowIdMsr+'" style="width:35%" ng-model="measureExpression'+rowIdMsr+'">'
+            +'<div>'
+            +   '<select class="selectpicker" id="measureExpression'+rowIdMsr+'" style="width:35%" ng-model="measureExpression'+rowIdMsr+'">'
             +        '<option value="SUM">SUM</option>'
             +        '<option value="MAX">MAX</option>'
             +        '<option value="MIN">MIN</option>'
@@ -402,10 +426,13 @@
             +        '<option value="COUNT_DISTINCT">COUNT_DISTINCT</option>'
             +        '<option value="TOP_N">TOP_N</option>'
             +    '</select>'
+            +'</div>'
             +'<label for="measureColName'+rowIdMsr+'">Column Name:</label>'
-            +'<select class="form-control" id="measureColName'+rowIdMsr+'" style="width:35%" ng-model="measureColName'+rowIdMsr+'">'
+            +'<div>'
+            +'<select class="selectpicker" id="measureColName'+rowIdMsr+'" style="width:35%" ng-model="measureColName'+rowIdMsr+'">'
             + '<option>Select column</option>'
             +'</select>'
+            +'</div>'
             +'<br/>'
             + '<button type="button" class="btn" onclick="removeMeasure()">Remove</button>'
             +'</div>'
